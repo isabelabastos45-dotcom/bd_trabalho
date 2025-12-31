@@ -1,27 +1,30 @@
 import sqlite3
 
 conn = sqlite3.connect('clientes.db') 
-
 cursor = conn.cursor()
 
+cursor.execute("PRAGMA foreign_keys = ON;")
 cursor.execute("""
-CREATE TABLE clientes (
-        id INT PRIMARY KEY AUTOINCREMENT,
-        nome VARCHAR(150) MANDATORY,
-        idade INT,
-        cpf     VARCHAR(11) UNIQUE MANDATORY,
+CREATE TABLE IF NOT EXISTS clientes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome VARCHAR(150) NOT NULL,
+        idade INTEGER,
+        cpf VARCHAR(11) UNIQUE NOT NULL,
         email VARCHAR(100) UNIQUE,
         localidade VARCHAR(100),
         data_nascimento DATE,
-        status BOOLEAN
+        status INTEGER NOT NULL (status IN (0,1))
 );
-               
-CREATE TABLE cliente_telefones (
+""")
+
+cursor.execute("""              
+CREATE TABLE IF NOT EXISTS cliente_telefones (
         id PRIMARY KEY,
         numero VARCHAR(20),
         tipo VARCHAR(100),
-        cliente_id FOREIGNER KEY
-               )
+        cliente_id INTEGER,
+        FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
 """)
 
 print('Tabela criada com sucesso.')
