@@ -94,3 +94,5 @@ conn.commit()
 conn.close()
 
 print("Dados inseridos com sucesso")
+
+
