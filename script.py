@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 import sqlite3
-
+#teste do vs code no mac
 conn = sqlite3.connect('gestao_clientes.db')
 cursor = conn.cursor()
 
@@ -50,7 +50,8 @@ clientes = [
     ('Júlia Lins de Alencar', 17, '12345678811', 'julia.lins@gmail.com', 'Rua Roxo, 02', 'Fortaleza', '2008-02-02', 0),
     ('Letícia Ozório de Lemos', 17, '12345678712', 'leticia.ozorio@gmail.com', 'Rua Rosa, 03', 'Fortaleza', '2008-02-03', 1),
     ('Loren Maria Félix Lessa', 17, '12345678613', 'loren.felix@gmail.com', 'Rua Azul, 04', 'Fortaleza', '2008-02-04', 0),
-    ('Maurício Ferreira', 17, '12345679914', 'mauricio.ferreira@gmail.com', 'Rua Vermelha, 05', 'Fortaleza', '2008-02-05', 1)
+    ('Maurício Ferreira Lima Junior', 17, '12345679914', 'mauricio.ferreira@gmail.com', 'Rua Vermelha, 05', 'Fortaleza', '2008-02-05', 1)
+
 ]
 
 cursor.executemany("""
