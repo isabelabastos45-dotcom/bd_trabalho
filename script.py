@@ -138,7 +138,7 @@ def editar_cliente():
             cliente_id
         ))
         conn.commit()
-        tree.item(selecionado, values=(cliente_id, entry_nome.get(), entry_cpf.get(), entry_email.get()))
+        tree.item(selecionado, values=(cliente_id, entry_nome.get(), entry_cpf.get(), entry_email.get(), "Editar"))
         tela.destroy()
 
     tela = Toplevel(janela)
@@ -192,8 +192,16 @@ cursor.execute("""
 SELECT id, nome, cpf, email FROM CLIENTES;
 """)
 
-for row in cursor.fetchall():
-    tree.insert("", END, values = row)
+tree.insert("", END, values=(novo_id, entry_nome.get(), entry_cpf.get(), entry_email.get(), "Editar"))
+
+def clique_duplo(event):
+    item = tree.identify_row(event.y)
+    coluna = tree.identify_column(event.x)
+
+    if coluna == '#5' and item:
+        tree.selection_set(item)
+        tree.focus(item)
+        editar_cliente()
 
 conn.close()
 janela.mainloop()
