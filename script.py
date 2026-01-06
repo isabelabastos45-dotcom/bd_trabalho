@@ -78,6 +78,90 @@ conn.commit()
 
 print("Dados inseridos com sucesso")
 
+def adicionar_cliente():
+    def salvar():
+        conn = sqlite3.connect('gestao_clientes.db')
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO clientes (nome, idade, cpf, email, endereco, localidade, data_nascimento, status)
+        VALUES (?, ?, ?, ?, '', '', '', 1)
+        """, (
+            entry_nome.get(),
+            entry_idade.get(),
+            entry_cpf.get(),
+            entry_email.get()
+        ))
+        conn.commit()
+        novo_id = cursor.lastrowid
+        tree.insert("", END, values=(novo_id, entry_nome.get(), entry_cpf.get(), entry_email.get()))
+        tela.destroy()
+
+    tela = Toplevel(janela)
+    tela.title("Adicionar Cliente")
+
+    Label(tela, text="Nome").grid(row=0, column=0)
+    entry_nome = Entry(tela)
+    entry_nome.grid(row=0, column=1)
+
+    Label(tela, text="Idade").grid(row=1, column=0)
+    entry_idade = Entry(tela)
+    entry_idade.grid(row=1, column=1)
+
+    Label(tela, text="CPF").grid(row=2, column=0)
+    entry_cpf = Entry(tela)
+    entry_cpf.grid(row=2, column=1)
+
+    Label(tela, text="Email").grid(row=3, column=0)
+    entry_email = Entry(tela)
+    entry_email.grid(row=3, column=1)
+
+    Button(tela, text="Salvar", command=salvar).grid(row=4, column=0, columnspan=2)
+
+
+def editar_cliente():
+    selecionado = tree.focus()
+    if not selecionado:
+        return
+
+    valores = tree.item(selecionado, 'values')
+    cliente_id = valores[0]
+
+    def salvar_edicao():
+        conn = sqlite3.connect('gestao_clientes.db')
+        cursor = conn.cursor()
+        cursor.execute("""
+        UPDATE clientes SET nome=?, cpf=?, email=? WHERE id=?
+        """, (
+            entry_nome.get(),
+            entry_cpf.get(),
+            entry_email.get(),
+            cliente_id
+        ))
+        conn.commit()
+        tree.item(selecionado, values=(cliente_id, entry_nome.get(), entry_cpf.get(), entry_email.get()))
+        tela.destroy()
+
+    tela = Toplevel(janela)
+    tela.title("Editar Cliente")
+
+    Label(tela, text="Nome").grid(row=0, column=0)
+    entry_nome = Entry(tela)
+    entry_nome.insert(0, valores[1])
+    entry_nome.grid(row=0, column=1)
+
+    Label(tela, text="CPF").grid(row=1, column=0)
+    entry_cpf = Entry(tela)
+    entry_cpf.insert(0, valores[2])
+    entry_cpf.grid(row=1, column=1)
+
+    Label(tela, text="Email").grid(row=2, column=0)
+    entry_email = Entry(tela)
+    entry_email.insert(0, valores[3])
+    entry_email.grid(row=2, column=1)
+
+    Button(tela, text="Salvar Alterações", command=salvar_edicao).grid(row=3, column=0, columnspan=2)
+
+
 #interface
 janela = Tk()
 janela.title('Gestão de Clientes')
@@ -96,6 +180,13 @@ tree.column("coluna5", width = 100, minwidth = 50, stretch = NO, anchor = CENTER
 tree.heading("#5", text = 'Ações')
 
 tree.grid(row = 0, column = 0)
+
+frame_botoes = Frame(janela)
+frame_botoes.grid(row=1, column=0, pady=10)
+
+Button(frame_botoes, text="Adicionar Cliente", command=adicionar_cliente).grid(row=0, column=0, padx=5)
+Button(frame_botoes, text="Editar Cliente", command=editar_cliente).grid(row=0, column=1, padx=5)
+
 
 cursor.execute("""
 SELECT id, nome, cpf, email FROM CLIENTES;
