@@ -46,11 +46,11 @@ print("Tabelas criadas com sucesso")
 
 #adicionar informações em clientes
 clientes = [
-    ('Isabela Bento Bastos', 16, '12345678915', 'isabela.bento@gmail.com', 'Rua Vermelha', 'Fortaleza', '2009-02-01', 1),
-    ('Júlia Lins de Alencar', 17, '12345678815', 'julia.lins@gmail.com', 'Rua Laranja', 'Fortaleza', '2009-02-02', 1),
-    ('Letícia Ozório de Lemos', 17, '12345678715', 'leticia.ozorio@gmail.com', 'Rua Amarela', 'Fortaleza', '2009-02-03', 1),
-    ('Loren Maria Félix Lessa', 17, '12345678615', 'loren.felix@gmail.com', 'Rua Verde', 'Fortaleza', '2009-02-04', 1),
-    ('Mauricio Ferreira', 17, '12345679915', 'mauricio.ferreira@gmail.com', 'Rua Azul', 'Fortaleza', '2009-02-05', 1)
+    ('Isabela Bento Bastos', 16, '12345678910', 'isabela.bento@gmail.com', 'Rua Verde, 01', 'Fortaleza', '2009-02-01', 1),
+    ('Júlia Lins de Alencar', 17, '12345678811', 'julia.lins@gmail.com', 'Rua Roxo, 02', 'Fortaleza', '2008-02-02', 0),
+    ('Letícia Ozório de Lemos', 17, '12345678712', 'leticia.ozorio@gmail.com', 'Rua Rosa, 03', 'Fortaleza', '2008-02-03', 1),
+    ('Loren Maria Félix Lessa', 17, '12345678613', 'loren.felix@gmail.com', 'Rua Azul, 04', 'Fortaleza', '2008-02-04', 0),
+    ('Maurício Ferreira', 17, '12345679914', 'mauricio.ferreira@gmail.com', 'Rua Vermelha, 05', 'Fortaleza', '2008-02-05', 1)
 ]
 
 cursor.executemany("""
