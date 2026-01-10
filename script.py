@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 
 conn = sqlite3.connect('gestao_clientes.db')
@@ -151,6 +152,42 @@ Button(janela,text="Adicionar Cliente",command=adicionar_cliente).grid(row=1,col
 cursor.execute("SELECT id,nome,cpf,email FROM clientes")
 for r in cursor.fetchall():
     tree.insert("",END,values=(r[0],r[1],r[2],r[3],"Editar"))
+    
+def deletar_cliente():
+    selecionado = tree.focus()
+    
+    # Verifica se algum item foi selecionado
+    if not selecionado:
+        messagebox.showwarning("Aviso", "Selecione um cliente para deletar.")
+        return
+
+    valores = tree.item(selecionado, 'values')
+    cliente_id = valores[0]
+    nome_cliente = valores[1]
+
+    # Confirmação obrigatória
+    resposta = messagebox.askyesno(
+        "Confirmação",
+        f"Você tem certeza que deseja deletar o cliente:\n\n{nome_cliente}?"
+    )
+
+    if resposta:
+        conn = sqlite3.connect('gestao_clientes.db')
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        DELETE FROM clientes WHERE id = ?
+        """, (cliente_id,))
+
+        conn.commit()
+        conn.close()
+
+        # Remove da tabela visual
+        tree.delete(selecionado)
+
+        messagebox.showinfo("Sucesso", "Cliente deletado com sucesso.")
+Button(janela, text="Deletar Cliente", command=deletar_cliente).grid(row=2, column=0, pady=10)
+
 
 conn.close()
 janela.mainloop()
