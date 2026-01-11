@@ -188,6 +188,45 @@ def deletar_cliente():
         messagebox.showinfo("Sucesso", "Cliente deletado com sucesso.")
 Button(janela, text="Deletar Cliente", command=deletar_cliente).grid(row=2, column=0, pady=10)
 
+def visualizar_cliente(event=None):
+    selecionado = tree.focus()
+    if not selecionado:
+        return
+
+    cliente_id = tree.item(selecionado, 'values')[0]
+
+    conn = sqlite3.connect('gestao_clientes.db')
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT nome, idade, cpf, email, endereco, localidade, data_nascimento, status
+    FROM clientes
+    WHERE id = ?
+    """, (cliente_id,))
+
+    cliente = cursor.fetchone()
+    conn.close()
+
+    if not cliente:
+        return
+
+    tela = Toplevel(janela)
+    tela.title("Detalhes do Cliente")
+    tela.resizable(False, False)
+
+    labels = [
+        "Nome", "Idade", "CPF", "Email",
+        "Endereço", "Localidade", "Data de Nascimento", "Status"
+    ]
+
+    for i, (label, valor) in enumerate(zip(labels, cliente)):
+        Label(tela, text=label + ": ", anchor="w", font=("Arial", 10, "bold")).grid(
+            row=i, column=0, sticky="w", padx=10, pady=5
+        )
+        Label(tela, text=valor).grid(
+            row=i, column=1, sticky="w", padx=10, pady=5
+        )
+tree.bind("<Double-1>", visualizar_cliente)
 
 conn.close()
 janela.mainloop()
