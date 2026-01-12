@@ -85,17 +85,9 @@ for col, txt, w in [
     ("acao","Ações",100)
 ]:
     tree.heading(col, text=txt)
-for col, txt, w in [
-    ("id","ID",50),
-    ("nome","Nome",250),
-    ("cpf","CPF",120),
-    ("email","Email",250),
-    ("acao","Ações",100)
-]:
-    tree.heading(col, text=txt)
 
     if col == "acao":
-        tree.column(col, width=w, anchor=W)
+        tree.column(col, width=w, anchor=CENTER)
     else:
         tree.column(col, width=w, anchor=CENTER)
 
@@ -164,9 +156,9 @@ tree.bind("<Double-1>", visualizar_cliente)
 def adicionar_cliente():
     tela = Toplevel(janela)
     tela.title("Adicionar Cliente")
-    tela.geometry("250x400")
+    tela.geometry("260x400")
 
-    labels = ["Nome","Idade","CPF","Email","Endereço","Localidade","Data","Status"]
+    labels = ["Nome","Idade","CPF","Email","Endereço","Localidade","Data de nascimento","Status"]
     entradas = []
 
     for i, l in enumerate(labels):
@@ -322,7 +314,7 @@ def editar_cliente(cliente_id):
         command=salvar_edicao
     ).grid(row=11, column=0, columnspan=2, pady=10)
 
-
+#clique na tabela
 def clique_na_tabela(event):
     item = tree.identify_row(event.y)
     coluna = tree.identify_column(event.x)
