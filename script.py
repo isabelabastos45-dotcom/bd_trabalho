@@ -40,7 +40,7 @@ CREATE TABLE cliente_telefones (
 
 #adicionar informações em clientes
 clientes = [
-    ('Isabela Bento Bastos', 16, '12345678915', 'isabela.bento@gmail.com', 'Rua Vermelha, 01', 'Fortaleza', '2009-02-01', 1),
+    ('Isaac Bento Bastos', 16, '12345678915', 'isaac.bento@gmail.com', 'Rua Vermelha, 01', 'Fortaleza', '2009-02-01', 1),
     ('Júlia Lins de Alencar', 17, '12345678815', 'julia.lins@gmail.com', 'Rua Laranja, 02', 'Fortaleza', '2009-02-02', 1),
     ('Letícia Ozório de Lemos', 17, '12345678715', 'leticia.ozorio@gmail.com', 'Rua Amarela, 03', 'Fortaleza', '2009-02-03', 1),
     ('Loren Maria Félix Lessa', 17, '12345678615', 'loren.felix@gmail.com', 'Rua Verde, 04', 'Fortaleza', '2009-02-04', 1),
